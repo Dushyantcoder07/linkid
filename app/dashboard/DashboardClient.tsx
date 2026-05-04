@@ -9,6 +9,7 @@ import { LinkIdCard } from "./LinkIdCard";
 type DashboardLink = {
     id: string;
     url: string;
+    isPublic: boolean;
 } & Record<string, unknown>;
 
 export default function DashboardClient({
@@ -48,6 +49,49 @@ export default function DashboardClient({
         );
     }
 
+    async function updateVisibility(id: string, isPublic: boolean) {
+        const csrfToken = await getCsrfToken();
+
+        const response = await fetch(`/api/links/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                "x-csrf-token": csrfToken,
+            },
+            body: JSON.stringify({ isPublic }),
+        });
+
+        if (!response.ok) {
+            toast.error("Unable to update visibility");
+            return;
+        }
+
+        toast.success(isPublic ? "Link set to public" : "Link set to private");
+
+        setLinks((prev) =>
+            prev.map((l) =>
+                l.id === id ? { ...l, isPublic } : l
+            )
+        );
+    }
+
+    async function exportCsv() {
+        const response = await fetch("/api/links/export");
+
+        if (!response.ok) {
+            toast.error("Unable to export CSV");
+            return;
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `linkid-links-${new Date().toISOString().slice(0, 10)}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+    }
+
     async function deleteLink(id: string) {
         if (!confirm("Delete this link?")) return;
 
@@ -83,8 +127,10 @@ export default function DashboardClient({
                     links={links}
                     showAdd={showAdd}
                     setShowAdd={setShowAdd}
+                    onExport={exportCsv}
                     onAdd={addLink}
                     onUpdate={updateLink}
+                    onToggleVisibility={updateVisibility}
                     onDelete={deleteLink}
                 />
 

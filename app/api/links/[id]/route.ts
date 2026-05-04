@@ -19,11 +19,9 @@ export async function PUT(
     }
 
     const { id } = await context.params;
-    const { url } = await req.json();
-
-    if (!url || typeof url !== "string") {
-        return NextResponse.json({ error: "Invalid URL" }, { status: 400 });
-    }
+    const body = await req.json();
+    const url = body?.url;
+    const isPublic = body?.isPublic;
 
     const link = await prisma.link.findUnique({
         where: { id },
@@ -34,18 +32,32 @@ export async function PUT(
         return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
-    const finalUrl = normalizeUrl(url);
+    const data: { url?: string; isPublic?: boolean } = {};
 
-    if (!validatePlatformUrl(link.platform as any, finalUrl)) {
-        return NextResponse.json(
-            { error: "Please enter a valid public link" },
-            { status: 400 }
-        );
+    if (typeof url === "string") {
+        const finalUrl = normalizeUrl(url);
+
+        if (!validatePlatformUrl(link.platform as any, finalUrl)) {
+            return NextResponse.json(
+                { error: "Please enter a valid public link" },
+                { status: 400 }
+            );
+        }
+
+        data.url = finalUrl;
+    }
+
+    if (typeof isPublic === "boolean") {
+        data.isPublic = isPublic;
+    }
+
+    if (Object.keys(data).length === 0) {
+        return NextResponse.json({ error: "Nothing to update" }, { status: 400 });
     }
 
     await prisma.link.update({
         where: { id },
-        data: { url: finalUrl },
+        data,
     });
 
     return NextResponse.json({ success: true });
