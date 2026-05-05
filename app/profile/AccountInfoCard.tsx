@@ -6,9 +6,14 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Mail, BadgeCheckIcon } from "lucide-react";
+import type { Session } from "next-auth";
 import { ConnectedAccounts } from "./ConnectedAccounts";
 
-export function AccountInfoCard({ user }: { user: any }) {
+type AccountInfoCardProps = {
+    user: Session["user"] & { id?: string };
+};
+
+export function AccountInfoCard({ user }: AccountInfoCardProps) {
     return (
         <Card>
             <CardHeader>

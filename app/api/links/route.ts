@@ -105,8 +105,9 @@ export async function POST(req: Request) {
         });
 
         return NextResponse.json({ link });
-    } catch (err: any) {
-        if (err?.code === "P2002") {
+    } catch (err: unknown) {
+        const error = err as { code?: string };
+        if (error?.code === "P2002") {
             return NextResponse.json(
                 { error: `You already added your ${finalLabel} link.` },
                 { status: 409 }
