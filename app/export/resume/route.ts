@@ -23,11 +23,16 @@ export async function GET() {
     }),
   );
   const uint8 = new Uint8Array(buffer);
+  const safeBase =
+    (user.name ?? user.username ?? "profile")
+      .replace(/[^\w.-]+/g, "_")
+      .replace(/^_+|_+$/g, "") || "profile";
 
   return new Response(uint8, {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="${user.name}_profile.pdf"`,
+      "Content-Disposition": `attachment; filename="${safeBase}_profile.pdf"`,
+      "Cache-Control": "private, no-store, max-age=0",
     },
   });
 }

@@ -4,25 +4,30 @@ import prisma from "@/lib/prisma";
 import { buildVCard } from "@/lib/buildVCard";
 
 export async function GET() {
-    const session = await getServerSession(authOptions);
-    if (!session?.user?.email) {
-        return new Response("Unauthorized", { status: 401 });
-    }   
+  const session = await getServerSession(authOptions);
+  if (!session?.user?.email) {
+    return new Response("Unauthorized", { status: 401 });
+  }
 
-    const user = await prisma.user.findUnique({
-        where: { email: session.user.email },
-        include: { links: true },
-    });
-    if (!user) {
-        return new Response("User not found", { status: 404 });
-    }
+  const user = await prisma.user.findUnique({
+    where: { email: session.user.email },
+    include: { links: true },
+  });
+  if (!user) {
+    return new Response("User not found", { status: 404 });
+  }
 
-    const vcard = buildVCard({ user, links: user.links });
-    return new Response(vcard, {
-        headers: {
-            "Content-Type": "text/vcard",
-            "Content-Disposition": `attachment; filename="${user.name}_profile.vcf"`,
-        },
-    }); 
+  const vcard = buildVCard({ user, links: user.links });
 
+  const safeBase = (user.name ?? user.username ?? "profile")
+    .replace(/[^\w.-]+/g, "_")
+    .slice(0, 80);
+  const fileName = `${safeBase}_profile.vcf`;
+
+  return new Response(vcard, {
+    headers: {
+      "Content-Type": "text/vcard",
+      "Content-Disposition": `attachment; filename="${fileName}"; filename*=UTF-8''${encodeURIComponent(fileName)}`,
+    },
+  });
 }

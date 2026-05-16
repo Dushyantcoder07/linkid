@@ -11,7 +11,12 @@ export async function generateMetadata({
   params: Promise<{ username: string }>;
 }) {
   const { username } = await params;
-  const resolved = await resolveUserByUsername(username);
+  let resolved = null;
+  try {
+    resolved = await resolveUserByUsername(username);
+  } catch {
+    resolved = null;
+  }
 
   if (!resolved) {
     return {
@@ -74,7 +79,7 @@ export default async function PublicProfile({
         />
         <div className="mt-4 flex gap-2 justify-center">
           <a
-            href={`/api/export/vcard/${username}`}
+            href={`/api/export/vcard/${encodeURIComponent(resolved.canonicalUsername)}`}
             className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border bg-background text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
           >
             <svg
@@ -96,7 +101,7 @@ export default async function PublicProfile({
           </a>
 
           <a
-            href={`/api/export/resume/${username}`}
+             href={`/api/export/resume/${encodeURIComponent(resolved.canonicalUsername)}`}
             className="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-border bg-background text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all duration-200"
           >
             <svg
