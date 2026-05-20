@@ -275,11 +275,10 @@ export default async function Home() {
               ["Get Started", "/login"],
             ]} />
             <FooterColumn title="Support" links={[
-              ["Report Issue", "https://github.com/your-repo/issues"],
-              ["Community", "https://github.com/your-repo/discussions"],
-              ["Documentation", "/docs"],
-              ["Contact Us", "mailto:support@linkid.qzz.io"],
-            ]} />
+["Report Issue", "https://github.com/your-repo/issues"],
+ ["Community", "https://github.com/vishnukothakapu/linkid/discussions"],
+  ["Documentation", "/docs"],
+  ["Contact Us", "mailto:support@linkid.qzz.io"],            ]} />
             <FooterColumn title="Company" links={[
               ["About", "/about"],
               ["Privacy Policy", "/privacy"],
