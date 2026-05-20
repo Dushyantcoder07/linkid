@@ -4,7 +4,7 @@ import { generateResumePDF } from "@/lib/generateResumePDF";
 
 export async function GET(
   _req: Request,
-  { params }: { params: Promise<{ username: string }> }
+  { params }: { params: Promise<{ username: string }> },
 ) {
   const { username } = await params;
   const user = await prisma.user.findUnique({
@@ -13,7 +13,7 @@ export async function GET(
   });
 
   if (!user) return new Response("Not found", { status: 404 });
-  
+
   const buffer = await renderToBuffer(
     generateResumePDF({
       user,
@@ -27,7 +27,7 @@ export async function GET(
       "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename="${((user.name || user.username) ?? "profile").replace(/\s+/g, "_")}_profile.pdf"`,
       "Cache-Control": "no-store",
-      "Pragma": "no-cache",
+      Pragma: "no-cache",
     },
   });
 }

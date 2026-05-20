@@ -138,6 +138,8 @@ export function generateResumePDF({
     year: "numeric",
   });
 
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/+$/, "") || "http://localhost:3000";
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -174,7 +176,7 @@ export function generateResumePDF({
 
         <View style={styles.footer} fixed>
           <Text style={styles.footerText}>
-            {process.env.NEXT_PUBLIC_BASE_URL}/{user.username}
+            {baseUrl}/{user.username}
           </Text>
           <Text style={styles.footerText}>Generated {generatedDate}</Text>
         </View>

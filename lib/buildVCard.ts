@@ -31,7 +31,8 @@ export function buildVCard({
     vcard += `URL;TYPE=${escapeText(link.platform.toUpperCase())}:${sanitizeUri(link.url)}${CRLF}`;
   }
 
-  vcard += `URL:${process.env.NEXT_PUBLIC_BASE_URL}/${user.username}${CRLF}`;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL?.replace(/\/+$/, "") || "http://localhost:3000";
+  vcard += `URL:${sanitizeUri(`${baseUrl}/${user.username}`)}${CRLF}`;
   vcard += `END:VCARD${CRLF}`;
   return vcard;
 }

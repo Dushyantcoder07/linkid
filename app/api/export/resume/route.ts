@@ -29,7 +29,7 @@ export async function GET() {
       "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename="${((user.name || user.username) ?? "profile").replace(/\s+/g, "_")}_profile.pdf"`,
       "Cache-Control": "private, no-store, max-age=0",
-      "Pragma": "no-cache",
+      Pragma: "no-cache",
     },
   });
 }

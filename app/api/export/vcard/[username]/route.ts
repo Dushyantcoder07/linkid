@@ -20,7 +20,7 @@ export async function GET(
       "Content-Type": "text/vcard; charset=utf-8",
       "Content-Disposition": `attachment; filename="${((user.name || user.username) ?? "profile").replace(/\s+/g, "_")}_profile.vcf"`,
       "Cache-Control": "no-store",
-      "Pragma": "no-cache",
+      Pragma: "no-cache",
     },
   });
 }
