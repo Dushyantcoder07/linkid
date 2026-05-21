@@ -148,19 +148,14 @@ export default function RegisterPage() {
                                 required
                                 className={`pl-10 pr-10 transition-colors ${password && error ? "border-destructive focus-visible:border-destructive focus-visible:ring-destructive/30" : ""}`}
                             />
-                            {showPassword ? (
-                                <EyeOff
-                                    onClick={() => setShowPassword((prev) => !prev)}
-                                    className="absolute right-3 cursor-pointer text-muted-foreground hover:text-foreground"
-                                    width="20"
-                                />
-                            ) : (
-                            <Eye
+                            <button
+                                type="button"
                                 onClick={() => setShowPassword((prev) => !prev)}
+                                aria-label={showPassword ? "Hide password" : "Show password"}
                                 className="absolute right-3 cursor-pointer text-muted-foreground hover:text-foreground"
-                                width="20"
-                                />
-                            )}
+                            >
+                                {showPassword ? <EyeOff width="20" /> : <Eye width="20" />}
+                            </button>
                         </div>
 
                         {password && error && (
