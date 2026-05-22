@@ -29,7 +29,7 @@ export default function PrivacyPolicyPage() {
 
         <div className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
           <div className="rounded-2xl border border-white/70 bg-white/70 p-6 shadow-xl shadow-violet-950/10 backdrop-blur-xl dark:border-white/10 dark:bg-white/[0.04] dark:shadow-black/20 sm:p-8 md:p-10">
-            <div className="prose prose-zinc max-w-none dark:prose-invert prose-headings:text-zinc-950 dark:prose-headings:text-white prose-h1:text-3xl prose-h2:text-2xl prose-h2:font-semibold prose-h2:mt-8 prose-h2:mb-4 prose-p:text-zinc-600 dark:prose-p:text-zinc-300 prose-strong:text-zinc-900 dark:prose-strong:text-white prose-li:text-zinc-600 dark:prose-li:text-zinc-300">
+            <div className="prose prose-zinc max-w-none dark:prose-invert prose-headings:text-zinc-950 dark:prose-headings:text-white">
               
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-3">1. Introduction</h2>
@@ -65,7 +65,7 @@ export default function PrivacyPolicyPage() {
                   LinkID uses NextAuth.js for secure authentication. We support:
                 </p>
                 <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                  <li><strong>Email/Password:</strong> Your passwords are <strong>hashed</strong> using bcrypt (cannot be decrypted - more secure than encryption)</li>
+                  <li><strong>Email/Password:</strong> Your passwords are <strong>hashed</strong> using bcrypt</li>
                   <li><strong>Google OAuth:</strong> We receive your name, email, and profile picture after your consent</li>
                   <li><strong>GitHub OAuth:</strong> We receive your GitHub username, email, and profile information</li>
                 </ul>
@@ -78,7 +78,7 @@ export default function PrivacyPolicyPage() {
                 <h2 className="text-2xl font-semibold mb-3">5. Cookies and Tracking</h2>
                 <p className="text-muted-foreground leading-relaxed">
                   We use cookies to maintain login sessions, remember theme preferences (light/dark mode), 
-                  and understand how users interact with our platform. You can control cookie settings through your browser.
+                  and understand how users interact with our platform.
                 </p>
               </section>
 
@@ -94,9 +94,9 @@ export default function PrivacyPolicyPage() {
                 <h2 className="text-2xl font-semibold mb-3">7. Third-Party Services</h2>
                 <p className="text-muted-foreground leading-relaxed mb-3">LinkID integrates with:</p>
                 <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
-                  <li><strong>GitHub/Google OAuth</strong> - For secure authentication</li>
-                  <li><strong>Cloudinary</strong> - For avatar image storage and optimization</li>
-                  <li><strong>Vercel</strong> - For hosting and deployment</li>
+                  <li><strong>GitHub/Google OAuth</strong> - For authentication</li>
+                  <li><strong>Cloudinary</strong> - For avatar image storage</li>
+                  <li><strong>Vercel</strong> - For hosting</li>
                   <li><strong>PostgreSQL</strong> - For database management</li>
                 </ul>
               </section>
@@ -108,22 +108,23 @@ export default function PrivacyPolicyPage() {
                   <li>Access your personal data</li>
                   <li>Request correction of inaccurate data</li>
                   <li>Request account deletion</li>
-                  <li>Object to or restrict data processing</li>
-                  <li>Data portability (receive a copy of your data)</li>
+                  <li>Object to data processing</li>
                 </ul>
               </section>
 
               <section className="mb-8">
                 <h2 className="text-2xl font-semibold mb-3">9. Contact Us</h2>
                 <p className="text-muted-foreground leading-relaxed">
-                  If you have questions about this Privacy Policy, please contact us at:{' '}
+                  Questions? Contact us at:{' '}
                   <a href="mailto:support@linkid.qzz.io" className="text-violet-600 hover:text-violet-700">
                     support@linkid.qzz.io
                   </a>
                 </p>
               </section>
+            </div>
+
             <div className="mt-12 border-t border-violet-200/60 pt-8 text-center dark:border-white/10">
-              <Link href="/" className="inline-flex items-center gap-2 text-sm text-zinc-600 transition-colors hover:text-violet-600">
+              <Link href="/" className="inline-flex items-center gap-2 text-sm text-zinc-600 transition-colors hover:text-violet-600 dark:text-zinc-400 dark:hover:text-violet-400">
                 ← Back to Home
               </Link>
             </div>
