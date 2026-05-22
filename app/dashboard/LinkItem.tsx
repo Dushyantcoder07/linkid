@@ -66,7 +66,7 @@ export function LinkItem({
 
                     <div className="min-w-0">
                         <p className="font-medium capitalize">
-                            {link.platform}
+                            {link.label || link.platform}
                         </p>
                         <p className="text-sm text-muted-foreground truncate">
                             {link.url}
